@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using HeroInheritance;
+using System.Collections.Generic;
 
 namespace GME1011A3
 {
@@ -41,12 +42,16 @@ namespace GME1011A3
                 //being a skellie. A skellie should have random health between 25 and 30, and 0 armour (remember
                 //skellie armour is 0 anyway)
                 int randomHealth = rng.Next(25, 31);
-                if (rng.Next(0, 101) > 50)
+                int randomBaddie = rng.Next(0, 101);
+                if (randomBaddie < 33)
                 {
                     baddies.Add(new Goblin(randomHealth, rng.Next(1, 5), rng.Next(1, 10)));
-                } else
+                } else if (randomBaddie < 66)
                 {
                     baddies.Add(new Skellie(randomHealth, 0));
+                } else
+                {
+                    baddies.Add(new Zombie(randomHealth, rng.Next(1, 6)));
                 }
                 
             
@@ -128,6 +133,17 @@ namespace GME1011A3
                     {
                         if (baddies[indexOfEnemy] is Goblin) { baddieDamage = ((Goblin)baddies[indexOfEnemy]).GoblinBite(); }
                         else if (baddies[indexOfEnemy] is Skellie) { baddieDamage = ((Skellie)baddies[indexOfEnemy]).SkellieRattle(); }
+                        else if (baddies[indexOfEnemy] is Zombie)
+                        {
+                            if (((Zombie)baddies[indexOfEnemy]).GetInfection() <= 0)
+                            {
+                                ((Zombie)baddies[indexOfEnemy]).Infection();
+                            } else
+                            {
+                                baddieDamage = (int)(((Zombie)baddies[indexOfEnemy]).GetInfection() * 1.2f);
+                            }
+                                
+                        }
                     } else
                     {
                         baddieDamage = baddies[indexOfEnemy].DealDamage();  //how much damage?
