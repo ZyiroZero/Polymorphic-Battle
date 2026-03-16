@@ -17,11 +17,9 @@ namespace GME1011A3
             Console.Write("How much strength does your fighter have? > ");
             int strength = int.Parse(Console.ReadLine());
 
-            if (health < 0) { health = 0; }
-            if (strength < 0) { strength = 1; }
             if (name == null) { name = "John"; } //random fallback
 
-            Fighter hero = new Fighter(health, name, strength); //TODO: Get these arguments from the user - health, name, strength
+            Hero hero = new Fighter(health, name, strength); //TODO: Get these arguments from the user - health, name, strength
             Console.WriteLine("Here is our heroic hero: " + hero + "\n\n");
 
             Console.Write("How many baddies are there? > ");
@@ -78,8 +76,28 @@ namespace GME1011A3
 
                 //hero deals damage first
                 Console.WriteLine(hero.GetName() + " is attacking enemy #" + (indexOfEnemy+1) + " of " + numBaddies + ". Eek, it's a " + baddies[indexOfEnemy].GetType().Name);
-                int heroDamage = hero.DealDamage();  //how much damage?
-                Console.WriteLine("Hero deals " + heroDamage + " heroic damage."); 
+
+                //if here does basic or special attack ------------------------
+                int heroDamage = -1;
+
+                if (rng.Next(0, 101) < 33)
+                {
+                    if (hero is Fighter)
+                    {
+                        if (strength > 0)
+                            heroDamage = ((Fighter)hero).Berserk();
+                    }
+                    else if (hero is Magician)
+                    { //extra
+                        if (((Magician)hero).GetMana() > 0)
+                            heroDamage = ((Magician)hero).LightningStrike();
+                    }
+                }
+                if (heroDamage == -1) { heroDamage = hero.DealDamage(); }
+                //---------------------------------------------------------------
+                    
+
+                Console.WriteLine("Hero deals " + heroDamage + " " + hero.GetType().Name + " damage."); 
                 baddies[indexOfEnemy].TakeDamage(heroDamage); //baddie takes the damage
 
 
