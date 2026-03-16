@@ -31,7 +31,7 @@ namespace GME1011A3
 
 
             //TODO: change this so that it can contain goblins and skellies! Just change the type of the list!!
-            List<Goblin> baddies = new List<Goblin>();
+            List<Minion> baddies = new List<Minion>();
 
 
 
@@ -42,7 +42,15 @@ namespace GME1011A3
                 //TODO: each baddie should have 50% chance of being a goblin, 50% chance of
                 //being a skellie. A skellie should have random health between 25 and 30, and 0 armour (remember
                 //skellie armour is 0 anyway)
-                baddies.Add(new Goblin(rng.Next(30, 35), rng.Next(1, 5), rng.Next(1, 10)));
+                int randomHealth = rng.Next(25, 31);
+                if (rng.Next(0, 101) > 50)
+                {
+                    baddies.Add(new Goblin(randomHealth, rng.Next(1, 5), rng.Next(1, 10)));
+                } else
+                {
+                    baddies.Add(new Skellie(randomHealth, 0));
+                }
+                
             
             
             }
