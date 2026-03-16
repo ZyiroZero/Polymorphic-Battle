@@ -123,7 +123,15 @@ namespace GME1011A3
                 }
                 else //baddie survived, now attacks the hero
                 {
-                    int baddieDamage = baddies[indexOfEnemy].DealDamage();  //how much damage?
+                    int baddieDamage = 0;
+                    if (rng.Next(0, 101) < 33)
+                    {
+                        if (baddies[indexOfEnemy] is Goblin) { baddieDamage = ((Goblin)baddies[indexOfEnemy]).GoblinBite(); }
+                        else if (baddies[indexOfEnemy] is Skellie) { baddieDamage = ((Skellie)baddies[indexOfEnemy]).SkellieRattle(); }
+                    } else
+                    {
+                        baddieDamage = baddies[indexOfEnemy].DealDamage();  //how much damage?
+                    }
                     Console.WriteLine("Enemy #" + (indexOfEnemy+1) + " deals " + baddieDamage + " damage!");
                     hero.TakeDamage(baddieDamage); //hero takes damage
 
