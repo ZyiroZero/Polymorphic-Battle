@@ -10,11 +10,23 @@ namespace GME1011A3
             //Epic battle goes here :)
             Random rng = new Random();
 
-            Fighter hero = new Fighter(100, "Aaron", 5); //TODO: Get these arguments from the user - health, name, strength
+            Console.Write("What is your fighters name? > ");
+            string name = Console.ReadLine();
+            Console.Write("How much health does your fighter have? > ");
+            int health = int.Parse(Console.ReadLine());
+            Console.Write("How much strength does your fighter have? > ");
+            int strength = int.Parse(Console.ReadLine());
+
+            if (health < 0) { health = 0; }
+            if (strength < 0) { strength = 1; }
+            if (name == null) { name = "John"; } //random fallback
+
+            Fighter hero = new Fighter(health, name, strength); //TODO: Get these arguments from the user - health, name, strength
             Console.WriteLine("Here is our heroic hero: " + hero + "\n\n");
 
-
-            int numBaddies = 5; //TODO: Get number of baddies from the user
+            Console.Write("How many baddies are there? > ");
+            int numBaddies = int.Parse(Console.ReadLine()); //TODO: Get number of baddies from the user
+            if (numBaddies < 0) { numBaddies = 0; }
             int numAliveBaddies = numBaddies;
 
 
